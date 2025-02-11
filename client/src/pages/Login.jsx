@@ -14,9 +14,14 @@ const Login = () => {
   } = useForm();
 
   const navigate = useNavigate();
-
+const [login , {isLoading}]=useLoginMutation()
   const submitHandler = async (data) => {
-    console.log("submit");
+    try{
+      const result=await login(data)
+console.log(result);
+    } catch(error){
+      console.log(error?.data?.message || error.message)
+    }
   };
 
   useEffect(() => {
