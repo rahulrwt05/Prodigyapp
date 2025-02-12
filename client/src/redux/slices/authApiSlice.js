@@ -1,16 +1,36 @@
+import { apiSlice } from "./apiSlice"; // ✅ Adjust path if needed
+
 const AUTH_URL = "/user";
 
 export const authApiSlice = apiSlice.injectEndpoints({
-  enpoints: (builder) => ({
+  endpoints: (builder) => ({
     login: builder.mutation({
       query: (data) => ({
         url: `${AUTH_URL}/login`,
         method: "POST",
         body: data,
-        credentials: true,
+        credentials: "include",
+      }),
+    }),
+
+    register: builder.mutation({
+      query: (data) => ({
+        url: `${AUTH_URL}/register`,
+        method: "POST",
+        body: data,
+        credentials: "include",
+      }),
+    }),
+
+    logout: builder.mutation({
+      query: () => ({
+        url: `${AUTH_URL}/logout`,
+        method: "POST",
+        credentials: "include",
       }),
     }),
   }),
 });
 
-export const { useLoginMutation } = authApiSlice;
+export const { useLoginMutation, useRegisterMutation, useLogoutMutation } =
+  authApiSlice;
