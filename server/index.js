@@ -15,13 +15,30 @@ const PORT = process.env.PORT || 8000;
 
 const app = express();
 
+// CORS configuration
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3001","https://prodigyapp.vercel.app/"],
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:3001",
+      "https://prodigyapp.vercel.app",
+    ], // No trailing slash
     methods: ["GET", "POST", "DELETE", "PUT"],
     credentials: true,
   })
 );
+
+// Handle preflight requests
+app.options("*", cors());
+
+// Set headers globally
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", req.headers.origin || "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
