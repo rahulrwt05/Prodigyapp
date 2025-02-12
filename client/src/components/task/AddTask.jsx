@@ -1,14 +1,7 @@
 import { Dialog } from "@headlessui/react";
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiImages } from "react-icons/bi";
-import { app } from "../../utils/firebase";
 import Button from "../Button";
 import ModalWrapper from "../ModalWrapper";
 import SelectList from "../SelectList";
@@ -17,8 +10,6 @@ import UserList from "./UserList";
 
 const LISTS = ["TODO", "IN PROGRESS", "COMPLETED"];
 const PRIORITY = ["HIGH", "MEDIUM", "NORMAL", "LOW"];
-
-const uploadedFileURLs = [];
 
 const AddTask = ({ open, setOpen, task }) => {
   const defaultValues = {
@@ -41,30 +32,14 @@ const AddTask = ({ open, setOpen, task }) => {
   const [priority, setPriority] = useState(
     task?.priority?.toUpperCase() || PRIORITY[2]
   );
-  const [assets, setAssets] = useState([]);
-  const [uploading, setUploading] = useState(false);
 
   const [createTask, { isLoading }] = useCreateTaskMutation();
   const [updateTask, { isLoading: isUpdating }] = useUpdateTaskMutation();
-  const URLS = task?.assets ? [...task.assets] : [];
 
   const submitHandler = async (data) => {
-    for (const file of assets) {
-      setUploading(true);
-      try {
-        await uploadFile(file);
-      } catch (error) {
-        console.error("Error uploading file:", error.message);
-        return;
-      } finally {
-        setUploading(false);
-      }
-    }
-
     try {
       const newData = {
         ...data,
-        assets: [...URLS, ...uploadedFileURLs],
         team,
         stage,
         priority,
@@ -82,40 +57,6 @@ const AddTask = ({ open, setOpen, task }) => {
       console.log(err);
       toast.error(err?.data?.message || err.error);
     }
-  };
-
-  const handleSelect = (e) => {
-    setAssets(e.target.files);
-  };
-
-  const uploadFile = async (file) => {
-    const storage = getStorage(app);
-    const name = new Date().getTime() + file.name;
-    const storageRef = ref(storage, name);
-
-    const uploadTask = uploadBytesResumable(storageRef, file);
-
-    return new Promise((resolve, reject) => {
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          console.log("Uploading");
-        },
-        (error) => {
-          reject(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref)
-            .then((downloadURL) => {
-              uploadedFileURLs.push(downloadURL);
-              resolve();
-            })
-            .catch((error) => {
-              reject(error);
-            });
-        }
-      );
-    });
   };
 
   return (
@@ -171,38 +112,14 @@ const AddTask = ({ open, setOpen, task }) => {
               selected={priority}
               setSelected={setPriority}
             />
-
-            <div className="w-full flex items-center justify-center mt-4">
-              <label
-                className="flex items-center gap-1 text-base text-ascent-2 hover:text-ascent-1 cursor-pointer my-4"
-                htmlFor="imgUpload"
-              >
-                <input
-                  type="file"
-                  className="hidden"
-                  id="imgUpload"
-                  onChange={(e) => handleSelect(e)}
-                  accept=".jpg, .png, .jpeg"
-                  multiple={true}
-                />
-                <BiImages />
-                <span>Add Assets</span>
-              </label>
-            </div>
           </div>
 
           <div className="bg-gray-50 py-6 sm:flex sm:flex-row-reverse gap-4">
-            {uploading ? (
-              <span className="text-sm py-2 text-red-500">
-                Uploading assets
-              </span>
-            ) : (
-              <Button
-                label="Submit"
-                type="submit"
-                className="bg-blue-600 px-8 text-sm font-semibold text-white hover:bg-blue-700 sm:w-auto"
-              />
-            )}
+            <Button
+              label="Submit"
+              type="submit"
+              className="bg-blue-600 px-8 text-sm font-semibold text-white hover:bg-blue-700 sm:w-auto"
+            />
 
             <Button
               type="button"
