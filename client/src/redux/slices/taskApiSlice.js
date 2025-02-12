@@ -1,19 +1,19 @@
-import { query } from "firebase/database";
 import { apiSlice } from "./apiSlice";
+
 const TASKS_URL = "/task";
 
 export const taskApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getDashboardStats: builder.query({
       query: () => ({
-        url: `${TASK_URL}/dashboard`,
+        url: `${TASKS_URL}/dashboard`,
         method: "GET",
         credentials: "include",
       }),
     }),
 
     getAllTask: builder.query({
-      query: ({ strQuery, isTrashed, search }) => ({
+      query: ({ strQuery = "", isTrashed = false, search = "" }) => ({
         url: `${TASKS_URL}?stage=${strQuery}&isTrashed=${isTrashed}&search=${search}`,
         method: "GET",
         credentials: "include",
@@ -25,7 +25,7 @@ export const taskApiSlice = apiSlice.injectEndpoints({
         url: `${TASKS_URL}/create`,
         method: "POST",
         body: data,
-        credentials: "icnlude",
+        credentials: "include",
       }),
     }),
 
@@ -54,6 +54,7 @@ export const taskApiSlice = apiSlice.injectEndpoints({
         credentials: "include",
       }),
     }),
+
     createSubTask: builder.mutation({
       query: ({ data, id }) => ({
         url: `${TASKS_URL}/create-subtask/${id}`,
@@ -82,7 +83,7 @@ export const taskApiSlice = apiSlice.injectEndpoints({
 
     deleteRestoreTask: builder.mutation({
       query: ({ id, actionType }) => ({
-        url: `{TASKS_URL}/delete-restore/${id}?actionType=${actionType}`,
+        url: `${TASKS_URL}/delete-restore/${id}?actionType=${actionType}`,
         method: "DELETE",
         credentials: "include",
       }),
