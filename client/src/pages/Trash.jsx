@@ -17,7 +17,7 @@ import {
   useDeleteRestoreTaskMutation,
   useGetAllTaskQuery,
 } from "../redux/slices/taskApiSlice";
-import Loading from "./Loader";
+import Loading from "../components/Loader";
 const ICONS = {
   high: <MdKeyboardDoubleArrowUp />,
   medium: <MdKeyboardArrowUp />,

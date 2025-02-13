@@ -14,7 +14,7 @@ import { Chart } from "../components/Chart";
 import UserInfo from "../components/UserInfo";
 import { useGetDashboardStatsQuery } from "../redux/slices/taskApiSlice";
 import { BGS, PRIOTITYSTYELS, TASK_TYPE, getInitials } from "../utils";
-import Loading from "./Loader";
+import Loading from "../components/Loader";
 const TaskTable = ({ tasks }) => {
   const ICONS = {
     high: <MdKeyboardDoubleArrowUp />,
