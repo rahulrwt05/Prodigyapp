@@ -27,4 +27,4 @@ const analytics = getAnalytics(app);
 const db = getFirestore(app);
 
 // Export Firebase services
-export { app, analytics, storage, db };
+export { app, db };
