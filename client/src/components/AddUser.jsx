@@ -9,7 +9,7 @@ import Button from "./Button";
 // Import missing mutations
 import { toast } from "sonner"; // Ensure toast is imported
 import { setCredentials } from "../redux/slices/authSlice"; // Import setCredentials action
-
+import { useRegisterMutation } from "../redux/slices/authSlice";
 const AddUser = ({ open, setOpen, userData }) => {
   let defaultValues = userData ?? {};
   const { user } = useSelector((state) => state.auth);
