@@ -1,12 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Textbox from "../components/Textbox";
 import Button from "../components/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { useLoginMutation } from "../redux/slices/authApiSlice"; // Adjust the path as needed
+import { useLoginMutation } from "../redux/slices/authApiSlice";
 import { setCredentials } from "../redux/slices/authSlice";
 import Loading from "../components/Loader";
+
 const Login = () => {
   const { user } = useSelector((state) => state.auth);
   const {
@@ -18,19 +19,24 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [login, { isLoading }] = useLoginMutation();
+  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
   const submitHandler = async (data) => {
     try {
       const result = await login(data).unwrap();
       dispatch(setCredentials(result));
-      navigate("/");
+      navigate("/dashboard");
     } catch (error) {
-      console.log(error?.data?.message || error.message);
+      setError(error?.data?.message || "Login failed. Please try again.");
     }
   };
 
   useEffect(() => {
-    user && navigate("/dashboard");
-  }, [user]);
+    if (user) {
+      navigate("/dashboard");
+    }
+  }, [user, navigate]);
 
   return (
     <div className="w-full min-h-screen flex items-center justify-center flex-col lg:flex-row bg-[#f3f4f6]">
@@ -76,20 +82,39 @@ const Login = () => {
                 className="w-full rounded-full"
                 register={register("email", {
                   required: "Email Address is required!",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "Invalid email address",
+                  },
                 })}
                 error={errors.email ? errors.email.message : ""}
               />
               <Textbox
                 placeholder="your password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 label="Password"
                 className="w-full rounded-full"
                 register={register("password", {
                   required: "Password is required!",
+                  minLength: {
+                    value: 6,
+                    message: "Password must be at least 6 characters",
+                  },
                 })}
                 error={errors.password ? errors.password.message : ""}
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="text-sm text-gray-500 hover:text-blue-600"
+              >
+                {showPassword ? "Hide" : "Show"} Password
+              </button>
+
+              {error && (
+                <p className="text-red-500 text-sm text-center">{error}</p>
+              )}
 
               <span className="text-sm text-gray-500 hover:text-blue-600 hover:underline cursor-pointer">
                 Forget Password?
