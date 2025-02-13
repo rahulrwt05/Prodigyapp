@@ -56,11 +56,11 @@ const MobileSidebar = () => {
         show={isSidebarOpen}
         as={Fragment}
         enter="transition-opacity duration-700"
-        enterFrom="opacity-0"
-        enterTo="opacity-100"
+        enterFrom="opacity-x-10"
+        enterTo="opacity-x-100"
         leave="transition-opacity duration-700"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
+        leaveFrom="opacity-x-100"
+        leaveTo="opacity-x-0"
       >
         {(ref) => (
           <div
