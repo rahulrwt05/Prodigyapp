@@ -10,6 +10,7 @@ import Button from "./Button";
 import { toast } from "sonner"; // Ensure toast is imported
 import { setCredentials } from "../redux/slices/authSlice"; // Import setCredentials action
 import { useRegisterMutation } from "../redux/slices/authApiSlice";
+import { useUpdateUserMutation } from "../redux/slices/userApiSlice";
 const AddUser = ({ open, setOpen, userData }) => {
   let defaultValues = userData ?? {};
   const { user } = useSelector((state) => state.auth);
