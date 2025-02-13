@@ -3,32 +3,38 @@ import User from "../models/user.js";
 
 const protectRoute = async (req, res, next) => {
   try {
+    console.log("Cookies:", req.cookies); // 🛠 Debugging step
     let token = req.cookies?.token;
 
-    if (token) {
-      const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-
-      const resp = await User.findById(decodedToken.userId).select(
-        "isAdmin email"
-      );
-
-      req.user = {
-        email: resp.email,
-        isAdmin: resp.isAdmin,
-        userId: decodedToken.userId,
-      };
-
-      next();
-    } else {
+    if (!token) {
       return res
         .status(401)
-        .json({ status: false, message: "Not authorized. Try login again." });
+        .json({ status: false, message: "No token found. Please log in." });
     }
+
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    const resp = await User.findById(decodedToken.userId).select(
+      "isAdmin email"
+    );
+
+    if (!resp) {
+      return res
+        .status(401)
+        .json({ status: false, message: "User not found." });
+    }
+
+    req.user = {
+      email: resp.email,
+      isAdmin: resp.isAdmin,
+      userId: decodedToken.userId,
+    };
+
+    next();
   } catch (error) {
-    console.error(error);
+    console.error("Auth Error:", error);
     return res
       .status(401)
-      .json({ status: false, message: "Not authorized. Try login again." });
+      .json({ status: false, message: "Invalid or expired token." });
   }
 };
 

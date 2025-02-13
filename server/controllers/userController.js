@@ -1,4 +1,4 @@
-import { response } from "express";
+import bcrypt from "bcryptjs"; // ✅ Added for password hashing
 import User from "../models/user.js";
 import { createJWT } from "../utils/index.js";
 import Notice from "../models/notification.js";
@@ -8,12 +8,10 @@ export const registerUser = async (req, res) => {
     const { name, email, password, isAdmin, role, title } = req.body;
 
     const userExist = await User.findOne({ email });
-
     if (userExist) {
-      return res.status(400).json({
-        status: false,
-        message: "User already exists",
-      });
+      return res
+        .status(400)
+        .json({ status: false, message: "User already exists" });
     }
 
     const user = await User.create({
@@ -26,10 +24,9 @@ export const registerUser = async (req, res) => {
     });
 
     if (user) {
-      isAdmin ? createJWT(res, user._id) : null;
+      if (isAdmin) createJWT(res, user._id); // ✅ Ensures token is set for admin
 
       user.password = undefined;
-
       res.status(201).json(user);
     } else {
       return res
@@ -45,29 +42,21 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-
     const user = await User.findOne({ email });
 
-    if (!user) {
+    if (!user || !user?.isActive) {
       return res
         .status(401)
-        .json({ status: false, message: "Invalid email or password." });
-    }
-
-    if (!user?.isActive) {
-      return res.status(401).json({
-        status: false,
-        message: "User account has been deactivated, contact the administrator",
-      });
+        .json({
+          status: false,
+          message: "Invalid credentials or inactive account.",
+        });
     }
 
     const isMatch = await user.matchPassword(password);
-
     if (user && isMatch) {
       createJWT(res, user._id);
-
       user.password = undefined;
-
       res.status(200).json(user);
     } else {
       return res
@@ -82,11 +71,7 @@ export const loginUser = async (req, res) => {
 
 export const logoutUser = async (req, res) => {
   try {
-    res.cookie("token", "", {
-      htttpOnly: true,
-      expires: new Date(0),
-    });
-
+    res.cookie("token", "", { httpOnly: true, expires: new Date(0) }); // ✅ Fixed typo
     res.status(200).json({ message: "Logout successful" });
   } catch (error) {
     console.log(error);
@@ -97,7 +82,6 @@ export const logoutUser = async (req, res) => {
 export const getTeamList = async (req, res) => {
   try {
     const users = await User.find().select("name title role email isActive");
-
     res.status(200).json(users);
   } catch (error) {
     console.log(error);
@@ -108,12 +92,8 @@ export const getTeamList = async (req, res) => {
 export const getNotificationsList = async (req, res) => {
   try {
     const { userId } = req.user;
-
-    const notice = await Notice.find({
-      team: userId,
-      isRead: { $nin: [userId] },
-    }).populate("task", "title");
-
+    const notice = await Notice.find({ team: userId, isRead: { $ne: userId } }) // ✅ Fixed query
+      .populate("task", "title");
     res.status(201).json(notice);
   } catch (error) {
     console.log(error);
@@ -124,31 +104,21 @@ export const getNotificationsList = async (req, res) => {
 export const updateUserProfile = async (req, res) => {
   try {
     const { userId, isAdmin } = req.user;
-    const { _id } = req.body;
-
-    const id =
-      isAdmin && userId === _id
-        ? userId
-        : isAdmin && userId !== _id
-        ? _id
-        : userId;
+    const { _id, name, title, role } = req.body;
+    const id = isAdmin && userId !== _id ? _id : userId;
 
     const user = await User.findById(id);
-
     if (user) {
-      user.name = req.body.name || user.name;
-      user.title = req.body.title || user.title;
-      user.role = req.body.role || user.role;
-
-      const updatedUser = await user.save();
-
-      user.password = undefined;
-
-      res.status(201).json({
-        status: true,
-        message: "Profile Updated Successfully.",
-        user: updatedUser,
+      user.set({
+        name: name || user.name,
+        title: title || user.title,
+        role: role || user.role,
       });
+      await user.save();
+
+      res
+        .status(201)
+        .json({ status: true, message: "Profile Updated Successfully.", user });
     } else {
       res.status(404).json({ status: false, message: "User not found" });
     }
@@ -161,7 +131,6 @@ export const updateUserProfile = async (req, res) => {
 export const markNotificationRead = async (req, res) => {
   try {
     const { userId } = req.user;
-
     const { isReadType, id } = req.query;
 
     if (isReadType === "all") {
@@ -188,20 +157,16 @@ export const markNotificationRead = async (req, res) => {
 export const changeUserPassword = async (req, res) => {
   try {
     const { userId } = req.user;
+    const { newPassword } = req.body;
 
     const user = await User.findById(userId);
-
     if (user) {
-      user.password = req.body.password;
-
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(newPassword, salt); // ✅ Password hashing
       await user.save();
-
-      user.password = undefined;
-
-      res.status(201).json({
-        status: true,
-        message: `Password chnaged successfully.`,
-      });
+      res
+        .status(201)
+        .json({ status: true, message: "Password changed successfully." });
     } else {
       res.status(404).json({ status: false, message: "User not found" });
     }
@@ -214,20 +179,19 @@ export const changeUserPassword = async (req, res) => {
 export const activateUserProfile = async (req, res) => {
   try {
     const { id } = req.params;
-
     const user = await User.findById(id);
 
     if (user) {
-      user.isActive = req.body.isActive; //!user.isActive
-
+      user.isActive = req.body.isActive;
       await user.save();
-
-      res.status(201).json({
-        status: true,
-        message: `User account has been ${
-          user?.isActive ? "activated" : "disabled"
-        }`,
-      });
+      res
+        .status(201)
+        .json({
+          status: true,
+          message: `User account has been ${
+            user?.isActive ? "activated" : "disabled"
+          }`,
+        });
     } else {
       res.status(404).json({ status: false, message: "User not found" });
     }
@@ -240,9 +204,12 @@ export const activateUserProfile = async (req, res) => {
 export const deleteUserProfile = async (req, res) => {
   try {
     const { id } = req.params;
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ status: false, message: "User not found" });
+    }
 
     await User.findByIdAndDelete(id);
-
     res
       .status(200)
       .json({ status: true, message: "User deleted successfully" });
