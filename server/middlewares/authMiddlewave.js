@@ -5,30 +5,35 @@ const protectRoute = async (req, res, next) => {
   try {
     let token = req.cookies?.token;
 
-    if (token) {
-      const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-
-      const resp = await User.findById(decodedToken.userId).select(
-        "isAdmin email"
-      );
-
-      req.user = {
-        email: resp.email,
-        isAdmin: resp.isAdmin,
-        userId: decodedToken.userId,
-      };
-
-      next();
-    } else {
+    if (!token) {
       return res
         .status(401)
-        .json({ status: false, message: "Not authorized. Try login again." });
+        .json({ message: "Not authorized. Try logging in again." });
     }
+
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    const resp = await User.findById(decodedToken.userId).select(
+      "isAdmin email"
+    );
+
+    if (!resp) {
+      return res
+        .status(401)
+        .json({ message: "User not found. Try logging in again." });
+    }
+
+    req.user = {
+      email: resp.email,
+      isAdmin: resp.isAdmin,
+      userId: decodedToken.userId,
+    };
+
+    next();
   } catch (error) {
     console.error(error);
     return res
       .status(401)
-      .json({ status: false, message: "Not authorized. Try login again." });
+      .json({ message: "Not authorized. Try logging in again." });
   }
 };
 

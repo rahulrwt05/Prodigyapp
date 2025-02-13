@@ -15,15 +15,11 @@ const PORT = process.env.PORT || 8000;
 
 const app = express();
 
-// CORS configuration
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "http://localhost:3001",
-      "https://prodigyapp.vercel.app",
-    ], // No trailing slash
-    methods: ["GET", "POST", "DELETE", "PUT"],
+    origin: "*", // Allow all origins for debugging
+    methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
