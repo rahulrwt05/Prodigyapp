@@ -9,6 +9,7 @@ import { useLogoutMutation } from "../redux/slices/authApiSlice"; // ✅ Import 
 import { logout } from "../redux/slices/authSlice"; // ✅ Import logout action
 import { toast } from "sonner"; // ✅ Import toast for notifications
 import AddUser from "../components/AddUser";
+import ChangePassword from "./ChangePassword";
 
 const UserAvatar = () => {
   const [open, setOpen] = useState(false);

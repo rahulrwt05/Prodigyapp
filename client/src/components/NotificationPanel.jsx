@@ -9,6 +9,8 @@ import {
   useGetNotificationsQuery,
   useMarkNotiAsReadMutation,
 } from "../redux/slices/userApiSlice";
+import ViewNotification from "./ViewNotification";
+
 
 const data = [
   {

@@ -24,3 +24,4 @@ const ViewNotification = ({ open, setOpen, el }) => {
     </>
   );
 };
+export default ViewNotification;
