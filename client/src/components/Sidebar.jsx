@@ -73,9 +73,9 @@ const Sidebar = () => {
       {/* Footer */}
       <div>
         <p className="text-xs text-gray-500 mt-4">
-          Copyright © 2024. All Rights Reserved
+          Copyright © 2025. All Rights Reserved
           <br />
-          Made with 💙 by Abhishek
+          Made with 💙 by Rahul Singh Rawat
         </p>
       </div>
     </div>
