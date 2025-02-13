@@ -8,7 +8,7 @@ export default defineConfig({
     port: 8080,
     proxy: {
       "/api": {
-        target: "https://prodigyapp-1.onrender.com ", // Vercel backend URL
+        target: "https://prodigyapp-1.onrender.com", // Vercel backend URL
         changeOrigin: true,
       },
     },
@@ -16,13 +16,7 @@ export default defineConfig({
 
   build: {
     rollupOptions: {
-      external: [
-        "firebase",
-        "firebase/app",
-        "firebase/storage",
-        "firebase/firestore",
-        "firebase/database",
-      ],
+      external: [],
     },
   },
 });
