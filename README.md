@@ -65,7 +65,7 @@ With the rise of remote work and dispersed teams, there is a growing need for to
 
    - Change passwords securely.
 
-4. **Dashboard:**
+4. **dashboard:**
    - Provide a summary of user activities.
    - Filter tasks into todo, in progress, or completed.
 

@@ -97,7 +97,7 @@ export const summary = {
       ],
       subTasks: [
         {
-          title: "Blog App Admin Dashboard",
+          title: "Blog App Admin dashboard",
           date: "2024-02-08T00:00:00.000Z",
           tag: "Website App",
           _id: "65c3535476ed5c48f9440973",
@@ -174,13 +174,13 @@ export const summary = {
       ],
       subTasks: [
         {
-          title: "Blog App Dashboard",
+          title: "Blog App dashboard",
           date: "2024-02-06T00:00:00.000Z",
           tag: "Design",
           _id: "65c352e776ed5c48f944095c",
         },
         {
-          title: "Blog App Admin Dashboard",
+          title: "Blog App Admin dashboard",
           date: "2024-02-07T00:00:00.000Z",
           tag: "Design",
           _id: "65c3531476ed5c48f9440965",
@@ -228,7 +228,7 @@ export const summary = {
       ],
       subTasks: [
         {
-          title: "Blog App Admin Dashboard",
+          title: "Blog App Admin dashboard",
           date: "2024-02-08T00:00:00.000Z",
           tag: "Website App",
           _id: "65c3535476ed5c48f9440973",
@@ -330,13 +330,13 @@ export const summary = {
       activities: [],
       subTasks: [
         {
-          title: "Blog App Dashboard",
+          title: "Blog App dashboard",
           date: "2024-02-06T00:00:00.000Z",
           tag: "Design",
           _id: "65c352e776ed5c48f944095c",
         },
         {
-          title: "Blog App Admin Dashboard",
+          title: "Blog App Admin dashboard",
           date: "2024-02-07T00:00:00.000Z",
           tag: "Design",
           _id: "65c3531476ed5c48f9440965",
@@ -373,7 +373,7 @@ export const summary = {
       activities: [],
       subTasks: [
         {
-          title: "Blog App Admin Dashboard",
+          title: "Blog App Admin dashboard",
           date: "2024-02-08T00:00:00.000Z",
           tag: "Website App",
           _id: "65c3535476ed5c48f9440973",
@@ -417,13 +417,13 @@ export const summary = {
       activities: [],
       subTasks: [
         {
-          title: "Blog App Dashboard",
+          title: "Blog App dashboard",
           date: "2024-02-06T00:00:00.000Z",
           tag: "Design",
           _id: "65c352e776ed5c48f944095c",
         },
         {
-          title: "Blog App Admin Dashboard",
+          title: "Blog App Admin dashboard",
           date: "2024-02-07T00:00:00.000Z",
           tag: "Design",
           _id: "65c3531476ed5c48f9440965",
@@ -460,7 +460,7 @@ export const summary = {
       activities: [],
       subTasks: [
         {
-          title: "Blog App Admin Dashboard",
+          title: "Blog App Admin dashboard",
           date: "2024-02-08T00:00:00.000Z",
           tag: "Website App",
           _id: "65c3535476ed5c48f9440973",
@@ -504,13 +504,13 @@ export const summary = {
       activities: [],
       subTasks: [
         {
-          title: "Blog App Dashboard",
+          title: "Blog App dashboard",
           date: "2024-02-06T00:00:00.000Z",
           tag: "Design",
           _id: "65c352e776ed5c48f944095c",
         },
         {
-          title: "Blog App Admin Dashboard",
+          title: "Blog App Admin dashboard",
           date: "2024-02-07T00:00:00.000Z",
           tag: "Design",
           _id: "65c3531476ed5c48f9440965",
@@ -681,7 +681,7 @@ export const tasks = [
     ],
     subTasks: [
       {
-        title: "Blog App Admin Dashboard",
+        title: "Blog App Admin dashboard",
         date: "2024-02-08T00:00:00.000Z",
         tag: "Website App",
         _id: "65c3535476ed5c48f9440973",
@@ -755,13 +755,13 @@ export const tasks = [
     ],
     subTasks: [
       {
-        title: "Blog App Dashboard",
+        title: "Blog App dashboard",
         date: "2024-02-06T00:00:00.000Z",
         tag: "Design",
         _id: "65c352e776ed5c48f944095c",
       },
       {
-        title: "Blog App Admin Dashboard",
+        title: "Blog App Admin dashboard",
         date: "2024-02-07T00:00:00.000Z",
         tag: "Design",
         _id: "65c3531476ed5c48f9440965",
@@ -821,7 +821,7 @@ export const tasks = [
     ],
     subTasks: [
       {
-        title: "Blog App Admin Dashboard",
+        title: "Blog App Admin dashboard",
         date: "2024-02-08T00:00:00.000Z",
         tag: "Website App",
         _id: "65c3535476ed5c48f9440973",
@@ -917,13 +917,13 @@ export const tasks = [
     activities: [],
     subTasks: [
       {
-        title: "Blog App Dashboard",
+        title: "Blog App dashboard",
         date: "2024-02-06T00:00:00.000Z",
         tag: "Design",
         _id: "65c352e776ed5c48f944095c",
       },
       {
-        title: "Blog App Admin Dashboard",
+        title: "Blog App Admin dashboard",
         date: "2024-02-07T00:00:00.000Z",
         tag: "Design",
         _id: "65c3531476ed5c48f9440965",
@@ -958,7 +958,7 @@ export const tasks = [
     activities: [],
     subTasks: [
       {
-        title: "Blog App Admin Dashboard",
+        title: "Blog App Admin dashboard",
         date: "2024-02-08T00:00:00.000Z",
         tag: "Website App",
         _id: "65c3535476ed5c48f9440973",
@@ -999,13 +999,13 @@ export const tasks = [
     activities: [],
     subTasks: [
       {
-        title: "Blog App Dashboard",
+        title: "Blog App dashboard",
         date: "2024-02-06T00:00:00.000Z",
         tag: "Design",
         _id: "65c352e776ed5c48f944095c",
       },
       {
-        title: "Blog App Admin Dashboard",
+        title: "Blog App Admin dashboard",
         date: "2024-02-07T00:00:00.000Z",
         tag: "Design",
         _id: "65c3531476ed5c48f9440965",
@@ -1040,7 +1040,7 @@ export const tasks = [
     activities: [],
     subTasks: [
       {
-        title: "Blog App Admin Dashboard",
+        title: "Blog App Admin dashboard",
         date: "2024-02-08T00:00:00.000Z",
         tag: "Website App",
         _id: "65c3535476ed5c48f9440973",
@@ -1081,13 +1081,13 @@ export const tasks = [
     activities: [],
     subTasks: [
       {
-        title: "Blog App Dashboard",
+        title: "Blog App dashboard",
         date: "2024-02-06T00:00:00.000Z",
         tag: "Design",
         _id: "65c352e776ed5c48f944095c",
       },
       {
-        title: "Blog App Admin Dashboard",
+        title: "Blog App Admin dashboard",
         date: "2024-02-07T00:00:00.000Z",
         tag: "Design",
         _id: "65c3531476ed5c48f9440965",
