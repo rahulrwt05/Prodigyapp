@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  Mddashboard,
+  MdDashboard, // FIXED: Changed Mddashboard to MdDashboard
   MdOutlineAddTask,
   MdOutlinePendingActions,
   MdSettings,
@@ -14,9 +14,9 @@ import clsx from "clsx";
 
 const linkData = [
   {
-    label: "dashboard",
+    label: "Dashboard",
     link: "dashboard",
-    icon: <Mddashboard />,
+    icon: <MdDashboard />, // FIXED HERE
   },
   {
     label: "Tasks",
@@ -80,7 +80,7 @@ const Sidebar = () => {
     );
   };
   return (
-    <div className="w-full  h-full flex flex-col gap-6 p-5">
+    <div className="w-full h-full flex flex-col gap-6 p-5">
       <h1 className="flex gap-1 items-center">
         <p className="bg-blue-600 p-2 rounded-full">
           <MdOutlineAddTask className="text-white text-2xl font-black" />
@@ -94,11 +94,11 @@ const Sidebar = () => {
         ))}
       </div>
 
-      <div className="">
+      <div>
         <p className="text-xs text-gray-500 mt-4">
-          Copyright © 2024. All Rights Reserved
+          Copyright © 2025. All Rights Reserved
           <br />
-          Made with 💙 by Abhishek
+          Made with 💙 by Rahul Singh Rawat
         </p>
       </div>
     </div>
