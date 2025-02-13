@@ -12,8 +12,10 @@ import {
   updateTask,
 } from "../controllers/taskController.js";
 import { isAdminRoute, protectRoute } from "../middlewares/authMiddlewave.js";
+import userRoutes from "./userRoutes.js";
 
 const router = express.Router();
+router.use("/user", userRoutes);
 
 router.post("/create", protectRoute, isAdminRoute, createTask);
 router.post("/duplicate/:id", protectRoute, isAdminRoute, duplicateTask);
