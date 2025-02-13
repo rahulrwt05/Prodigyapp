@@ -5,7 +5,7 @@ import Button from "./Button";
 import ModalWrapper from "./ModalWrapper";
 import Textbox from "./Textbox";
 import { toast } from "sonner";
-import { useChangePasswordMutation } from "../redux/slices/authApiSlice"; // Ensure this is imported
+import useChangePasswordMutation from "../redux/slices/authApiSlice"; // Ensure this is imported
 import Loading from "./Loader";
 const ChangePassword = ({ open, setOpen }) => {
   const {

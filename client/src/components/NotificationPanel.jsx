@@ -11,7 +11,6 @@ import {
 } from "../redux/slices/userApiSlice";
 import ViewNotification from "./ViewNotification";
 
-
 const data = [
   {
     _id: "65c5bbf3787832cf99f28e6d",
