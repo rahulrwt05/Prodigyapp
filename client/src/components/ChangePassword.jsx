@@ -6,7 +6,7 @@ import ModalWrapper from "./ModalWrapper";
 import Textbox from "./Textbox";
 import { toast } from "sonner";
 import { useChangePasswordMutation } from "../redux/slices/authApiSlice"; // Ensure this is imported
-
+import Loading from "./Loader";
 const ChangePassword = ({ open, setOpen }) => {
   const {
     register,
@@ -79,7 +79,9 @@ const ChangePassword = ({ open, setOpen }) => {
               className="bg-blue-600 px-8 text-sm font-semibold text-white hover:bg-blue-700"
               label="Save"
             />
-            <button type="button"   className="bg-white px-5 text-sm font-semibold text-gray-900 sm:w-auto"
+            <button
+              type="button"
+              className="bg-white px-5 text-sm font-semibold text-gray-900 sm:w-auto"
               onClick={() => setOpen(false)} // ✅ Fixed typo
             >
               Cancel

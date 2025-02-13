@@ -5,7 +5,7 @@ import { summary } from "../../assets/data";
 import clsx from "clsx";
 import { getInitials } from "../../utils";
 import { MdCheck } from "react-icons/md";
-
+import Loading from "./Loader";
 const UserList = ({ setTeam, team }) => {
   const { data, isLoading } = useGetTeamListQuery();
   const [selectedUsers, setSelectedUsers] = useState([]);

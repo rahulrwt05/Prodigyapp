@@ -12,7 +12,7 @@ import {
   useUserActionMutation,
 } from "../redux/slices/userApiSlice";
 import { toast } from "sonner";
-
+import Loading from "./Loader";
 const Users = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [open, setOpen] = useState(false);

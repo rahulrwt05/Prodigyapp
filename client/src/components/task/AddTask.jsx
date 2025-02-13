@@ -7,7 +7,7 @@ import ModalWrapper from "../ModalWrapper";
 import SelectList from "../SelectList";
 import Textbox from "../Textbox";
 import UserList from "./UserList";
-
+import Loading from "./Loader";
 const LISTS = ["TODO", "IN PROGRESS", "COMPLETED"];
 const PRIORITY = ["HIGH", "MEDIUM", "NORMAL", "LOW"];
 
