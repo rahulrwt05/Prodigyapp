@@ -156,7 +156,7 @@ export const dashboardStatistics = async (req, res) => {
       .sort({ _id: -1 });
 
     //   group task by stage and calculate counts
-    const groupTaskks = allTasks.reduce((result, task) => {
+    const groupTasks = allTasks.reduce((result, task) => {
       const stage = task.stage;
 
       if (!result[stage]) {
@@ -186,7 +186,7 @@ export const dashboardStatistics = async (req, res) => {
       totalTasks,
       last10Task,
       users: isAdmin ? users : [],
-      tasks: groupTaskks,
+      tasks: groupTasks,
       graphData: groupData,
     };
 
