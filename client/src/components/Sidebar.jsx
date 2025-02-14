@@ -49,7 +49,7 @@ const Sidebar = () => {
         <p className="bg-blue-600 p-2 rounded-full">
           <MdOutlineAddTask className="text-white text-2xl font-black" />
         </p>
-        <span className="text-2xl font-bold text-black">TaskZen</span>
+        <span className="text-2xl font-bold text-black">Prodigy</span>
       </h1>
 
       {/* Sidebar Links */}
