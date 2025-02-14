@@ -1,6 +1,6 @@
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import dotenv from "dhttp://localhost:3000otenv";
+import dotenv from "dotenv"; // ✅ Fix Typo
 import express from "express";
 import morgan from "morgan";
 import { dbConnection } from "./utils/index.js";
@@ -9,26 +9,28 @@ import { fileURLToPath } from "url";
 import { errorHandler, routeNotFound } from "./middlewares/errorMiddleware.js";
 import routes from "./routes/index.js";
 
-//resolving dirname for es module
+// Resolving __dirname for ES module
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 console.log(__dirname);
 
 dotenv.config();
 
+// Connect to Database
 dbConnection();
 
 const PORT = process.env.PORT || 8000;
 
 const app = express();
 
+// Enable CORS for frontend on Vercel
 app.use(
   cors({
     origin: "https://prodigyapp.vercel.app",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"], // Add this!
-    exposedHeaders: ["Authorization"], // Allow headers to be read
+    allowedHeaders: ["Content-Type", "Authorization"], // Ensure headers are allowed
+    exposedHeaders: ["Authorization"],
   })
 );
 
@@ -37,15 +39,22 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
 
+// API Routes
 app.use("/api", routes);
-//Use the clent app
-app.use(express.static(path.join(__dirname, "/client/dist")));
 
-//Render frontend for any path that user goes to
-app.get("*", (req, res) =>
-  res.sendFile(path.join(__dirname, "/client/dist/index.html"))
-);
+// ONLY serve frontend if it's hosted on the same server
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "/client/dist")));
+
+  // Render frontend for any path
+  app.get("*", (req, res) =>
+    res.sendFile(path.join(__dirname, "/client/dist/index.html"))
+  );
+}
+
+// Error Handling Middleware
 app.use(routeNotFound);
 app.use(errorHandler);
 
+// Start Server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
